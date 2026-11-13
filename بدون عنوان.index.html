@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nile Sport - متجر الملابس الرياضية</title>
+    <!-- خط جوهري أنيق -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
+            --border-color: #e2e8f0;
+            --header-bg: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-color: #0f172a;
+            --text-color: #f1f5f9;
+            --card-bg: #1e293b;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --border-color: #334155;
+            --header-bg: #1e293b;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-theme {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .welcome-banner h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #cbd5e1;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .product-price {
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 1.1rem;
+        }
+
+        .admin-panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .admin-panel.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border-radius: 8px;
+            outline: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--header-bg);
+            margin-top: auto;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">⚡ Nile Sport</div>
+        <div class="header-actions">
+            <button class="btn-theme" id="themeToggle" onclick="toggleTheme()" title="تبديل الوضع الليلي">🌙</button>
+            <button class="btn" onclick="toggleAdmin()">⚙️ لوحة التحكم</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="welcome-banner">
+            <h1>أهلاً بك في متجر Nile Sport</h1>
+            <p>وجهتك الأولى لأحدث الملابس الرياضية وأزياء الأندية العصرية</p>
+        </div>
+
+        <!-- لوحة التحكم لإضافة المنتجات -->
+        <div class="admin-panel" id="adminPanel">
+            <h3>إضافة منتج جديد</h3>
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>اسم المنتج</label>
+                <input type="text" id="pName" class="form-control" placeholder="مثال: تيشيرت الأهلي 2027">
+            </div>
+            <div class="form-group">
+                <label>السعر (جنيه)</label>
+                <input type="number" id="pPrice" class="form-control" placeholder="مثال: 450">
+            </div>
+            <div class="form-group">
+                <label>رابط الصورة</label>
+                <input type="text" id="pImg" class="form-control" placeholder="ضع رابط الصورة هنا">
+            </div>
+            <button class="btn" onclick="addProduct()">حفظ ونشر المنتج</button>
+        </div>
+
+        <!-- عرض المنتجات -->
+        <div class="products-grid" id="productsGrid">
+            <!-- المنتجات ستعرض هنا برمجياً -->
+        </div>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © 2026 Nile Sport
+    </footer>
+
+    <script>
+        // نظام الوضع الليلي (Dark Mode)
+        const body = document.body;
+        const themeToggleBtn = document.getElementById('themeToggle');
+
+        // التحقق من الحفظ السابق
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggleBtn.textContent = '☀️';
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+            }
+        }
+
+        // إدارة المنتجات
+        let products = JSON.parse(localStorage.getItem('nile_products')) || [
+            { id: 1, name: 'تيشيرت الأهلي الأساسي 2027', price: 650, img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500' },
+            { id: 2, name: 'شورت رياضي مرن للتمرين', price: 300, img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=500' }
+        ];
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            products.forEach(p => {
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <img src="${p.img}" alt="${p.name}" class="product-img" onerror="this.src='https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500'">
+                        <div class="product-info">
+                            <div class="product-title">${p.name}</div>
+                            <div class="product-price">${p.price} جنيه</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+        }
+
+        function addProduct() {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const img = document.getElementById('pImg').value;
+
+            if(!name || !price) {
+                alert('الرجاء إدخال اسم المنتج والسعر على الأقل!');
+                return;
+            }
+
+            const newProduct = {
+                id: Date.now(),
+                name: name,
+                price: price,
+                img: img || 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500'
+            };
+
+            products.push(newProduct);
+            localStorage.setItem('nile_products', JSON.stringify(products));
+            renderProducts();
+
+            // تفريغ الحقول
+            document.getElementById('pName').value = '';
+            document.getElementById('pPrice').value = '';
+            document.getElementById('pImg').value = '';
+            toggleAdmin();
+        }
+
+        // تشغيل عرض المنتجات عند فتح الصفحة
+        renderProducts();
+    </script>
+</body>
+</html>
